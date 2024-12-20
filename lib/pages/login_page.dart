@@ -46,6 +46,8 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           _headingWidget(),
           _inputForm(),
+          _loginButton(),
+          _registerButton(),
         ],
       ),
     );
@@ -60,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Text(
-              "Welcome Back",
+              "Welcome back!",
               style: TextStyle(fontSize: 35, fontWeight: FontWeight.w700),
             ),
             Text(
@@ -83,6 +85,7 @@ class _LoginPageState extends State<LoginPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _emailTextField(),
+              _passwordTextField(),
             ],
           )),
     );
@@ -91,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget _emailTextField() {
     return TextFormField(
       autocorrect: false,
-      style: TextStyle(color: Colors.white),
+      style: TextStyle(color: Colors.white60),
       validator: (_input) {},
       onSaved: (_input) {},
       cursorColor: Colors.white,
@@ -101,6 +104,59 @@ class _LoginPageState extends State<LoginPage> {
           borderSide: BorderSide(color: Colors.white),
         ),
         // hintStyle: TextStyle(color: Colors.white),
+      ),
+    );
+  }
+
+  Widget _passwordTextField() {
+    return TextFormField(
+      autocorrect: false,
+      obscureText: true,
+      style: TextStyle(color: Colors.white60),
+      validator: (_input) {},
+      onSaved: (_input) {},
+      cursorColor: Colors.white,
+      decoration: InputDecoration(
+        hintText: "Password",
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.white),
+        ),
+        // hintStyle: TextStyle(color: Colors.white),
+      ),
+    );
+  }
+
+  Widget _loginButton() {
+    return Container(
+      height: _deviceHeight * 0.06,
+      width: _deviceWidth,
+      margin: EdgeInsets.only(top: 10),
+      child: MaterialButton(
+        onPressed: () {},
+        child: Text(
+          "LOGIN",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+        ),
+        color: Colors.blue,
+      ),
+    );
+  }
+
+  Widget _registerButton() {
+    return GestureDetector(
+      onTap: () {
+        print("Register Now!");
+      },
+      child: Container(
+        height: _deviceHeight * 0.06,
+        width: _deviceWidth,
+        // margin: EdgeInsets.only(top: 10),
+        child: const Text(
+          "REGISTER",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 18, fontWeight: FontWeight.w700, color: Colors.white60),
+        ),
       ),
     );
   }
