@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/auth_providers.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -15,6 +17,9 @@ class _LoginPageState extends State<LoginPage> {
   // Initialize form key properly
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  String _email = '';
+  String _password = '';
 
   // _LoginPageState(){
   //   _formKey = GlobalKey<FormState>();
@@ -34,6 +39,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _LoginPageUI() {
+    print(_email);
+    print(_password);
+
     return Container(
       // color: Colors.red,
       height: _deviceHeight * 0.60,
@@ -56,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget _headingWidget() {
     return Container(
       height: _deviceHeight * 0.12,
-      child: Column(
+      child: const Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
@@ -78,7 +86,9 @@ class _LoginPageState extends State<LoginPage> {
       height: _deviceHeight * 0.16,
       child: Form(
           key: _formKey,
-          onChanged: () {},
+          onChanged: () {
+            _formKey.currentState?.save();
+          },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.max,
@@ -96,9 +106,13 @@ class _LoginPageState extends State<LoginPage> {
       autocorrect: false,
       style: TextStyle(color: Colors.white60),
       validator: (_input) {},
-      onSaved: (_input) {},
+      onSaved: (_input) {
+        setState(() {
+          _email = _input!;
+        });
+      },
       cursorColor: Colors.white,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         hintText: "Email Adress",
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.white),
@@ -114,9 +128,13 @@ class _LoginPageState extends State<LoginPage> {
       obscureText: true,
       style: TextStyle(color: Colors.white60),
       validator: (_input) {},
-      onSaved: (_input) {},
+      onSaved: (_input) {
+        setState(() {
+          _password = _input!;
+        });
+      },
       cursorColor: Colors.white,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         hintText: "Password",
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.white),
@@ -133,11 +151,11 @@ class _LoginPageState extends State<LoginPage> {
       margin: EdgeInsets.only(top: 10),
       child: MaterialButton(
         onPressed: () {},
-        child: Text(
+        color: Colors.blue,
+        child: const Text(
           "LOGIN",
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
         ),
-        color: Colors.blue,
       ),
     );
   }
