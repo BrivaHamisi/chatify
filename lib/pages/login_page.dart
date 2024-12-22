@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
       body: Align(
         alignment: Alignment.center,
-        child: _LoginPageUI(),
+        child: ChangeNotifierProvider<AuthProvider>.value(value: value)
       ),
     );
   }
@@ -159,6 +159,7 @@ class _LoginPageState extends State<LoginPage> {
         onPressed: () {
           if (_formKey.currentState?.validate() == true){
             //Login the User
+            print('Valid Stuff');
           }
         },
         color: Colors.blue,
