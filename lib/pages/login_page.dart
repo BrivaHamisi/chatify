@@ -105,7 +105,10 @@ class _LoginPageState extends State<LoginPage> {
     return TextFormField(
       autocorrect: false,
       style: TextStyle(color: Colors.white60),
-      validator: (_input) {},
+      validator: (_input) {
+        // return _input.length != 0 && _input.contains("@") ? null : "Please enter a valid email";
+        return _input?.isNotEmpty == true && _input?.contains("@") == true ? null : "Please enter a valid email";
+      },
       onSaved: (_input) {
         setState(() {
           _email = _input!;
@@ -127,7 +130,10 @@ class _LoginPageState extends State<LoginPage> {
       autocorrect: false,
       obscureText: true,
       style: TextStyle(color: Colors.white60),
-      validator: (_input) {},
+      validator: (_input) {
+        // return _input?.isNotEmpty == true && _input?.length >= 6 ? null : "Please enter a valid password";
+        return _input?.isNotEmpty == true && (_input?.length ?? 0) >= 6 ? null : "Please enter a valid password";
+      },
       onSaved: (_input) {
         setState(() {
           _password = _input!;
@@ -150,7 +156,11 @@ class _LoginPageState extends State<LoginPage> {
       width: _deviceWidth,
       margin: EdgeInsets.only(top: 10),
       child: MaterialButton(
-        onPressed: () {},
+        onPressed: () {
+          if (_formKey.currentState?.validate() == true){
+            //Login the User
+          }
+        },
         color: Colors.blue,
         child: const Text(
           "LOGIN",
