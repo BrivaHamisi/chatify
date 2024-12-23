@@ -17,6 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   // Initialize form key properly
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  AuthProvider? _auth;
 
   String _email = '';
   String _password = '';
@@ -33,32 +34,34 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
       body: Align(
         alignment: Alignment.center,
-        child: ChangeNotifierProvider<AuthProvider>.value(value: value)
+        child: ChangeNotifierProvider<AuthProvider>.value(
+            value: AuthProvider.instance, child: _LoginPageUI()),
       ),
     );
   }
 
   Widget _LoginPageUI() {
-    print(_email);
-    print(_password);
-
-    return Container(
-      // color: Colors.red,
-      height: _deviceHeight * 0.60,
-      padding: EdgeInsets.symmetric(horizontal: _deviceWidth * 0.10),
-      alignment: Alignment.center,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _headingWidget(),
-          _inputForm(),
-          _loginButton(),
-          _registerButton(),
-        ],
-      ),
-    );
+    return Builder(builder: (BuildContext _context) {
+      _auth= Provider.of<AuthProvider>(_context);
+      print(_auth?.user);
+      return Container(
+        // color: Colors.red,
+        height: _deviceHeight * 0.60,
+        padding: EdgeInsets.symmetric(horizontal: _deviceWidth * 0.10),
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _headingWidget(),
+            _inputForm(),
+            _loginButton(),
+            _registerButton(),
+          ],
+        ),
+      );
+    });
   }
 
   Widget _headingWidget() {
@@ -107,7 +110,9 @@ class _LoginPageState extends State<LoginPage> {
       style: TextStyle(color: Colors.white60),
       validator: (_input) {
         // return _input.length != 0 && _input.contains("@") ? null : "Please enter a valid email";
-        return _input?.isNotEmpty == true && _input?.contains("@") == true ? null : "Please enter a valid email";
+        return _input?.isNotEmpty == true && _input?.contains("@") == true
+            ? null
+            : "Please enter a valid email";
       },
       onSaved: (_input) {
         setState(() {
@@ -132,7 +137,9 @@ class _LoginPageState extends State<LoginPage> {
       style: TextStyle(color: Colors.white60),
       validator: (_input) {
         // return _input?.isNotEmpty == true && _input?.length >= 6 ? null : "Please enter a valid password";
-        return _input?.isNotEmpty == true && (_input?.length ?? 0) >= 6 ? null : "Please enter a valid password";
+        return _input?.isNotEmpty == true && (_input?.length ?? 0) >= 6
+            ? null
+            : "Please enter a valid password";
       },
       onSaved: (_input) {
         setState(() {
@@ -151,15 +158,16 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _loginButton() {
-    return Container(
+    return (_auth?.status == AuthStatus.Authenticating) == true ? Align(alignment: Alignment.center, child: CircularProgressIndicator()) : Container(
       height: _deviceHeight * 0.06,
       width: _deviceWidth,
       margin: EdgeInsets.only(top: 10),
       child: MaterialButton(
         onPressed: () {
-          if (_formKey.currentState?.validate() == true){
+          if (_formKey.currentState?.validate() == true) {
             //Login the User
-            print('Valid Stuff');
+            _auth?.loginUserWithEmailandPassword(_email, _password);
+            // Navigator.pop(context);
           }
         },
         color: Colors.blue,

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import './pages/login_page.dart';
+import 'package:provider/provider.dart';
+import '../providers/auth_providers.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await AuthProvider.initializeFirebase();
   runApp(const MyApp());
 }
 
