@@ -44,6 +44,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import '../services/snackbar_service.dart';
 
 enum AuthStatus {
   NotAuthenticated,
@@ -86,6 +87,7 @@ class AuthProvider extends ChangeNotifier {
 
       user = result.user;
       status = AuthStatus.Authenticated;
+      SnackbarService.instance.showSnackError("Welcome, $user?.displayName ?? 'Guest'");
       print("Logged In Successfully");
       
     } catch (e) {
