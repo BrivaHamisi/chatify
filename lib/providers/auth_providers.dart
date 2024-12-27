@@ -87,13 +87,13 @@ class AuthProvider extends ChangeNotifier {
 
       user = result.user;
       status = AuthStatus.Authenticated;
-      SnackbarService.instance.showSnackError("Welcome, $user?.displayName ?? 'Guest'");
+      SnackbarService.instance.showSnackSuccess("Welcome, $user?.displayName ?? 'Guest'");
       print("Logged In Successfully");
       
     } catch (e) {
       status = AuthStatus.Error;
-      print("Login Error: $e");
-      rethrow; // Rethrow to handle the error in the UI
+      SnackbarService.instance.showSnackError("Error Authenticating");
+      print("Login Error: $e"); // Rethrow to handle the error in the UI
     } finally {
       notifyListeners();
     }
