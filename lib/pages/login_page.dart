@@ -111,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget _emailTextField() {
     return TextFormField(
       autocorrect: false,
-      style: TextStyle(color: Colors.white60),
+      style: const TextStyle(color: Colors.white60),
       validator: (_input) {
         // return _input.length != 0 && _input.contains("@") ? null : "Please enter a valid email";
         return _input?.isNotEmpty == true && _input?.contains("@") == true
@@ -129,7 +129,6 @@ class _LoginPageState extends State<LoginPage> {
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.white),
         ),
-        // hintStyle: TextStyle(color: Colors.white),
       ),
     );
   }
@@ -140,7 +139,6 @@ class _LoginPageState extends State<LoginPage> {
       obscureText: true,
       style: TextStyle(color: Colors.white60),
       validator: (_input) {
-        // return _input?.isNotEmpty == true && _input?.length >= 6 ? null : "Please enter a valid password";
         return _input?.isNotEmpty == true && (_input?.length ?? 0) >= 6
             ? null
             : "Please enter a valid password";
@@ -156,7 +154,6 @@ class _LoginPageState extends State<LoginPage> {
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.white),
         ),
-        // hintStyle: TextStyle(color: Colors.white),
       ),
     );
   }
