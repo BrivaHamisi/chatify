@@ -113,7 +113,6 @@ class _LoginPageState extends State<LoginPage> {
       autocorrect: false,
       style: const TextStyle(color: Colors.white60),
       validator: (_input) {
-        // return _input.length != 0 && _input.contains("@") ? null : "Please enter a valid email";
         return _input?.isNotEmpty == true && _input?.contains("@") == true
             ? null
             : "Please enter a valid email";
@@ -168,7 +167,6 @@ class _LoginPageState extends State<LoginPage> {
           if (_formKey.currentState?.validate() == true) {
             //Login the User
             _auth?.loginUserWithEmailandPassword(_email, _password);
-            // Navigator.pop(context);
           }
         },
         color: Colors.blue,
@@ -188,7 +186,6 @@ class _LoginPageState extends State<LoginPage> {
       child: Container(
         height: _deviceHeight * 0.06,
         width: _deviceWidth,
-        // margin: EdgeInsets.only(top: 10),
         child: const Text(
           "REGISTER",
           textAlign: TextAlign.center,
