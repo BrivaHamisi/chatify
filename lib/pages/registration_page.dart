@@ -9,8 +9,16 @@ class RegistrationPage extends StatefulWidget{
 }
 
 class _RegistrationPageState extends State<RegistrationPage>{ 
+
+  double _deviceHeight = 0.0;
+  double _deviceWidth = 0.0;
+  
   @override
   Widget build(BuildContext context) {
+
+    _deviceHeight = MediaQuery.of(context).size.height;
+    _deviceWidth = MediaQuery.of(context).size.width;
+    
     return Scaffold();
   }
 }

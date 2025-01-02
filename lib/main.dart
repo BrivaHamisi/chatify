@@ -3,6 +3,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import './pages/login_page.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_providers.dart';
+import '../pages/registration_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: LoginPage(),
+      home: RegistrationPage(),
     );
   }
 }
