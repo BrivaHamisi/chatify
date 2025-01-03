@@ -30,6 +30,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   Widget SignupPageUI() {
     return Container(
       height: _deviceHeight * 0.75,
+      padding: EdgeInsets.symmetric(horizontal: _deviceWidth * 0.10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         mainAxisSize: MainAxisSize.max,
@@ -83,17 +84,20 @@ class _RegistrationPageState extends State<RegistrationPage> {
   }
 
   Widget _imageSelectorWidget() {
-    return Container(
+    return Align(
+      alignment: Alignment.center, 
+      child: Container(
       height: _deviceHeight * 0.10,
       width: _deviceHeight * 0.10,
       decoration: BoxDecoration(
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(500),
         image: DecorationImage(
-          image: NetworkImage(
-              "https://www.iconfinder.com/icons/3124442/businessman_developer_entrepreneur_programmer_technologist_icon"),
+          fit: BoxFit.cover,
+          image: NetworkImage("https://i.pravatar.cc/300"),
         ),
       ),
+    ),
     );
   }
 }
