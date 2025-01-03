@@ -11,6 +11,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
   double _deviceHeight = 0.0;
   double _deviceWidth = 0.0;
 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     _deviceHeight = MediaQuery.of(context).size.height;
@@ -34,6 +36,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _headingWidget(),
+          _inputForm(),
         ],
       ),
     );
@@ -59,22 +62,38 @@ class _RegistrationPageState extends State<RegistrationPage> {
     );
   }
 
-
   Widget _inputForm() {
     return Container(
-      height: _deviceHeight * 0.16,
+      height: _deviceHeight * 0.35,
       child: Form(
-          // key: _formKey,
-          // onChanged: () {
-          //   _formKey.currentState?.save();
-          // },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-            ],
-          )),
+        key: _formKey,
+        onChanged: () {
+          _formKey.currentState?.save();
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _imageSelectorWidget(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _imageSelectorWidget() {
+    return Container(
+      height: _deviceHeight * 0.10,
+      width: _deviceHeight * 0.10,
+      decoration: BoxDecoration(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(500),
+        image: DecorationImage(
+          image: NetworkImage(
+              "https://www.iconfinder.com/icons/3124442/businessman_developer_entrepreneur_programmer_technologist_icon"),
+        ),
+      ),
     );
   }
 }
