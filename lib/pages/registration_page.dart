@@ -13,6 +13,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  String _email = '';
+  String _password = '';
+
   @override
   Widget build(BuildContext context) {
     _deviceHeight = MediaQuery.of(context).size.height;
@@ -38,6 +41,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         children: [
           _headingWidget(),
           _inputForm(),
+          _registerButton()
         ],
       ),
     );
@@ -77,6 +81,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _imageSelectorWidget(),
+            _nameTextfield(),
+            _emailTextField(),
+            _passwordTextField(),
+            
           ],
         ),
       ),
@@ -99,5 +107,101 @@ class _RegistrationPageState extends State<RegistrationPage> {
       ),
     ),
     );
+  }
+
+  Widget _emailTextField() {
+    return TextFormField(
+      autocorrect: false,
+      style: const TextStyle(color: Colors.white60),
+      validator: (_input) {
+        return _input?.isNotEmpty == true && _input?.contains("@") == true
+            ? null
+            : "Please enter a valid email";
+      },
+      onSaved: (_input) {
+        setState(() {
+          _email = _input!;
+        });
+      },
+      cursorColor: Colors.white,
+      decoration: const InputDecoration(
+        hintText: "Email Adress",
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.white),
+        ),
+      ),
+    );
+  }
+
+  Widget _nameTextfield(){
+    return TextFormField(
+      autocorrect: false,
+      style: const TextStyle(color: Colors.white60),
+      validator: (_input) {
+        return _input?.isNotEmpty == true
+            ? null
+            : "Please enter a name";
+      },
+      onSaved: (_input) {
+        setState(() {
+          // _email = _input!;
+        });
+      },
+      cursorColor: Colors.white,
+      decoration: const InputDecoration(
+        hintText: "Name",
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.white),
+        ),
+      ),
+    );
+  }
+
+  Widget _passwordTextField() {
+    return TextFormField(
+      autocorrect: false,
+      obscureText: true,
+      style: TextStyle(color: Colors.white60),
+      validator: (_input) {
+        return _input?.isNotEmpty == true && (_input?.length ?? 0) >= 6
+            ? null
+            : "Please enter a Password";
+      },
+      onSaved: (_input) {
+        setState(() {
+          _password = _input!;
+        });
+      },
+      cursorColor: Colors.white,
+      decoration: const InputDecoration(
+        hintText: "Password",
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.white),
+        ),
+      ),
+    );
+  }
+  
+  Widget _registerButton() {
+    return  Align(alignment: Alignment.center, child: Container(
+      height: _deviceHeight * 0.06,
+      width: _deviceWidth,
+      margin: EdgeInsets.only(top: 10),
+      child: MaterialButton(
+        onPressed: () {
+          if (_formKey.currentState?.validate() == true) {
+            //Login the User
+            // _auth?.loginUserWithEmailandPassword(_email, _password);
+          }
+        },
+        color: Colors.blue,
+        child: const Text(
+          "REGISTER",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+        ),
+      ),
+    ),
+    );
+
   }
 }
