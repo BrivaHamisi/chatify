@@ -25,12 +25,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
       backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
       body: Container(
         alignment: Alignment.center,
-        child: SignupPageUI(),
+        child: registrationPageUI(),
       ),
     );
   }
 
-  Widget SignupPageUI() {
+  Widget registrationPageUI() {
     return Container(
       height: _deviceHeight * 0.75,
       padding: EdgeInsets.symmetric(horizontal: _deviceWidth * 0.10),
@@ -41,7 +41,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
         children: [
           _headingWidget(),
           _inputForm(),
-          _registerButton()
+          _registerButton(),
+          _backtToLoginButton(),
         ],
       ),
     );
@@ -202,6 +203,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
       ),
     ),
     );
-
   }
+  Widget _backtToLoginButton(){
+      return GestureDetector(
+        onTap: (){},
+        child: Container(
+        height: _deviceHeight * 0.06, 
+        width: _deviceWidth, 
+        child: Icon(Icons.arrow_back, size: 40,),
+        )
+      );
+    }
 }
