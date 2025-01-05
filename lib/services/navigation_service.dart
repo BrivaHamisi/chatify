@@ -16,6 +16,22 @@ class NavigationService {
   }
 
   Future<dynamic> navigateTo(String _routeName) {
-    return navigatiorKey.currentState!.pushReplacementNamed(_routeName, );
+    return navigatiorKey.currentState!.pushNamed(_routeName, );
   }
+
+  Future<dynamic> navigateToRoute(MaterialPageRoute _route) {
+    return navigatiorKey.currentState!.push(_route, );
+  }
+
+  // bool goBack() {
+  //   return navigatiorKey.currentState!.pop();
+  // }
+
+  bool goBack() {
+  if (navigatiorKey.currentState!.canPop()) {
+    navigatiorKey.currentState!.pop();
+    return true;  // Successfully popped
+  }
+  return false;  // No route to pop
+}
 }

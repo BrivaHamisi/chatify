@@ -4,6 +4,7 @@ import './pages/login_page.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_providers.dart';
 import '../pages/registration_page.dart';
+import './services/navigation_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,10 +18,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Chatify',
+      navigatorKey: NavigationService.instance.navigatiorKey,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.dark,
-        primaryColor: Color.fromRGBO(42, 117, 188, 1),
+        primaryColor: const Color.fromRGBO(42, 117, 188, 1),
         colorScheme: const ColorScheme.dark(
           primary: Color.fromRGBO(42, 117, 188, 1),
           secondary: Color.fromRGBO(28, 27, 27, 1),
@@ -28,6 +30,11 @@ class MyApp extends StatelessWidget {
         // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+
+      routes: {
+        "login": (context) => LoginPage(),
+        "register": (context) => RegistrationPage(),
+      },
       home: RegistrationPage(),
     );
   }
