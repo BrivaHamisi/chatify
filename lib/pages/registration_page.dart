@@ -1,4 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import '../services/navigation_service.dart';
+import '../services/media_service.dart';
 
 class RegistrationPage extends StatefulWidget {
   @override
@@ -13,6 +16,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+
+  File? _image = File('');
   String _email = '';
   String _password = '';
 
@@ -61,7 +66,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               style: TextStyle(fontSize: 35, fontWeight: FontWeight.w700),
             ),
             Text(
-              "Please enter yout details.",
+              "Please enter your details.",
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.w200),
             ),
           ]),
@@ -85,7 +90,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
             _nameTextfield(),
             _emailTextField(),
             _passwordTextField(),
-            
           ],
         ),
       ),
@@ -94,20 +98,28 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   Widget _imageSelectorWidget() {
     return Align(
-      alignment: Alignment.center, 
-      child: Container(
-      height: _deviceHeight * 0.10,
-      width: _deviceHeight * 0.10,
-      decoration: BoxDecoration(
-        color: Colors.transparent,
-        borderRadius: BorderRadius.circular(500),
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: NetworkImage("https://i.pravatar.cc/300"),
-        ),
-      ),
-    ),
-    );
+        alignment: Alignment.center,
+        child: GestureDetector(
+          onTap: () async {
+           File? _imageFile = await MediaService.instance.getImageFromLibrary()!;
+            setState(() {
+              _image = _imageFile;
+            });
+          },
+          child: Container(
+            height: _deviceHeight * 0.10,
+            width: _deviceHeight * 0.10,
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(500),
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: const NetworkImage("https://i.pravatar.cc/300"),
+                // _image != null ? FileImage(_image!) :
+              ),
+            ),
+          ),
+        ));
   }
 
   Widget _emailTextField() {
@@ -134,14 +146,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
     );
   }
 
-  Widget _nameTextfield(){
+  Widget _nameTextfield() {
     return TextFormField(
       autocorrect: false,
       style: const TextStyle(color: Colors.white60),
       validator: (_input) {
-        return _input?.isNotEmpty == true
-            ? null
-            : "Please enter a name";
+        return _input?.isNotEmpty == true ? null : "Please enter a name";
       },
       onSaved: (_input) {
         setState(() {
@@ -182,36 +192,43 @@ class _RegistrationPageState extends State<RegistrationPage> {
       ),
     );
   }
-  
+
   Widget _registerButton() {
-    return  Align(alignment: Alignment.center, child: Container(
-      height: _deviceHeight * 0.06,
-      width: _deviceWidth,
-      margin: EdgeInsets.only(top: 10),
-      child: MaterialButton(
-        onPressed: () {
-          if (_formKey.currentState?.validate() == true) {
-            //Login the User
-            // _auth?.loginUserWithEmailandPassword(_email, _password);
-          }
-        },
-        color: Colors.blue,
-        child: const Text(
-          "REGISTER",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+    return Align(
+      alignment: Alignment.center,
+      child: Container(
+        height: _deviceHeight * 0.06,
+        width: _deviceWidth,
+        margin: EdgeInsets.only(top: 10),
+        child: MaterialButton(
+          onPressed: () {
+            if (_formKey.currentState?.validate() == true) {
+              //Login the User
+              // _auth?.loginUserWithEmailandPassword(_email, _password);
+            }
+          },
+          color: Colors.blue,
+          child: const Text(
+            "REGISTER",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+          ),
         ),
       ),
-    ),
     );
   }
-  Widget _backtToLoginButton(){
-      return GestureDetector(
-        onTap: (){},
+
+  Widget _backtToLoginButton() {
+    return GestureDetector(
+        onTap: () {
+          NavigationService.instance.goBack();
+        },
         child: Container(
-        height: _deviceHeight * 0.06, 
-        width: _deviceWidth, 
-        child: Icon(Icons.arrow_back, size: 40,),
-        )
-      );
-    }
+          height: _deviceHeight * 0.06,
+          width: _deviceWidth,
+          child: Icon(
+            Icons.arrow_back,
+            size: 40,
+          ),
+        ));
+  }
 }

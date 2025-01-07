@@ -31,11 +31,13 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
 
+      initialRoute: "login",
+
       routes: {
-        "login": (context) => LoginPage(),
-        "register": (context) => RegistrationPage(),
+        "login": (_context) => LoginPage(),
+        "register": (_context) => RegistrationPage(),
       },
-      home: RegistrationPage(),
+      // home: RegistrationPage(),
     );
   }
 }
