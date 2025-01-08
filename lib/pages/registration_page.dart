@@ -16,8 +16,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-
   File? _image = File('');
+  String _name = '';
   String _email = '';
   String _password = '';
 
@@ -101,10 +101,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
         alignment: Alignment.center,
         child: GestureDetector(
           onTap: () async {
-           File? _imageFile = await MediaService.instance.getImageFromLibrary()!;
-            setState(() {
-              _image = _imageFile;
-            });
+            File? _imageFile =await MediaService.instance.getImageFromLibrary();
+            if (_imageFile != null) {
+              setState(() {
+                _image = _imageFile;
+              });
+            }
           },
           child: Container(
             height: _deviceHeight * 0.10,
@@ -114,7 +116,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               borderRadius: BorderRadius.circular(500),
               image: DecorationImage(
                 fit: BoxFit.cover,
-                image: const NetworkImage("https://i.pravatar.cc/300"),
+                image:  NetworkImage("https://i.pravatar.cc/300"),
                 // _image != null ? FileImage(_image!) :
               ),
             ),
@@ -155,7 +157,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       },
       onSaved: (_input) {
         setState(() {
-          // _email = _input!;
+          _name = _input!;
         });
       },
       cursorColor: Colors.white,
