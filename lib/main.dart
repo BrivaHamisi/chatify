@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../providers/auth_providers.dart';
 import '../pages/registration_page.dart';
 import './services/navigation_service.dart';
+import './services/db_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +17,8 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
+    // DBService.instance.createUserInDB("0123", 'James', 'james@gmail.com', "https://i.pravatar.cc/300");
+
     return MaterialApp(
       title: 'Chatify',
       navigatorKey: NavigationService.instance.navigatiorKey,
