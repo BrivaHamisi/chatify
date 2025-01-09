@@ -10,7 +10,7 @@ class DBService {
   Future<void> createUserInDB(
       String _uid, String _name, String _email, String _imageUrl) async {
     try {
-      return await _db.collection('Users').doc(_uid).set({
+      return await _db.collection('users').doc(_uid).set({
         'name': _name,
         'email': _email,
         // 'password': _password,

@@ -47,7 +47,7 @@ class AuthProvider extends ChangeNotifier {
       status = AuthStatus.Authenticated;
       SnackbarService.instance.showSnackSuccess("Welcome, $user?.displayName ?? 'Guest'");
       //update last seen time
-      
+
       print("Logged In Successfully");
       
     } catch (e) {
@@ -59,7 +59,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  void registeruserWithEmailAndPassword(String _email, String _password, Future<void> onSuccess(String _uid)) async {
+  void registerUserWithEmailAndPassword(String _email, String _password, Future<void> onSuccess(String _uid)) async {
     status = AuthStatus.Authenticating;
     notifyListeners();
 

@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import '../services/navigation_service.dart';
 import '../services/media_service.dart';
 import '../providers/auth_providers.dart';
+import '../services/cloud_storage_service.dart';
+import '../services/db_service.dart';
 
 class RegistrationPage extends StatefulWidget {
   @override
@@ -121,7 +123,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             decoration: BoxDecoration(
               color: Colors.transparent,
               borderRadius: BorderRadius.circular(500),
-              image: DecorationImage(
+              image: const DecorationImage(
                 fit: BoxFit.cover,
                 image:  NetworkImage("https://i.pravatar.cc/300"),
                 // _image != null ? FileImage(_image!) :
@@ -202,29 +204,73 @@ class _RegistrationPageState extends State<RegistrationPage> {
     );
   }
 
-  Widget _registerButton() {
-    return Align(
-      alignment: Alignment.center,
-      child: Container(
-        height: _deviceHeight * 0.06,
-        width: _deviceWidth,
-        margin: EdgeInsets.only(top: 10),
-        child: MaterialButton(
-          onPressed: () {
-            if (_formKey.currentState?.validate() == true) {
-              //Login the User
-              // _auth?.loginUserWithEmailandPassword(_email, _password);
-            }
-          },
-          color: Colors.blue,
-          child: const Text(
-            "REGISTER",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
-          ),
+  // Widget _registerButton() {
+  //   return Align(
+  //     alignment: Alignment.center,
+  //     child: Container(
+  //       height: _deviceHeight * 0.06,
+  //       width: _deviceWidth,
+  //       margin: EdgeInsets.only(top: 10),
+  //       child: MaterialButton(
+  //         onPressed: () {
+  //           if (_formKey.currentState != null && _formKey.currentState!.validate() && _image != null) {
+  //             _auth?.registerUserWithEmailAndPassword(_email, _password, (String _uid) async {
+  //               var _result = await CloudStorageService.instance.uploadUserImage(_image!, _uid);
+  //               var _imageURL = await _result.ref.getDownloadURL();
+  //               await DBService.instance.createUserInDB(_uid, _name, _email, _imageURL);  
+  //             });
+  //             //Login the User
+  //             // _auth?.loginUserWithEmailandPassword(_email, _password);
+  //           }
+  //         },
+  //         color: Colors.blue,
+  //         child: const Text(
+  //           "REGISTER",
+  //           style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+Widget _registerButton() {
+  return Align(
+    alignment: Alignment.center,
+    child: _auth?.status != AuthStatus.Authenticating ? Container(
+      height: _deviceHeight * 0.06,
+      width: _deviceWidth,
+      margin: EdgeInsets.only(top: 10),
+      child: MaterialButton(
+        onPressed: () {
+          if (_formKey.currentState != null &&
+              _formKey.currentState!.validate() &&
+              _image != null) {
+            _auth?.registerUserWithEmailAndPassword(
+              _email,
+              _password,
+              (String _uid) async {
+                try {
+                  var _imageURL = await CloudStorageService.instance
+                      .uploadUserImage(_image!, _uid);
+                  await DBService.instance.createUserInDB(
+                      _uid, _name, _email, _imageURL);
+                } catch (e) {
+                  print("Error during registration: $e");
+                }
+              },
+            );
+            //Login the User
+            // _auth?.loginUserWithEmailandPassword(_email, _password);
+          }
+        },
+        color: Colors.blue,
+        child: const Text(
+          "REGISTER",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
         ),
       ),
-    );
-  }
+    ) : const Align(alignment: Alignment.center, child: CircularProgressIndicator()),
+  );
+}
 
   Widget _backtToLoginButton() {
     return GestureDetector(
@@ -234,7 +280,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         child: Container(
           height: _deviceHeight * 0.06,
           width: _deviceWidth,
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back,
             size: 40,
           ),
