@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../services/navigation_service.dart';
 import '../services/media_service.dart';
+import '../providers/auth_providers.dart';
 
 class RegistrationPage extends StatefulWidget {
   @override
@@ -15,6 +17,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   double _deviceWidth = 0.0;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  AuthProvider? _auth;
 
   File? _image = File('');
   String _name = '';
@@ -30,13 +33,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
       backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
       body: Container(
         alignment: Alignment.center,
-        child: registrationPageUI(),
+        child: ChangeNotifierProvider<AuthProvider>.value(value: AuthProvider.instance, child: registrationPageUI(),
       ),
+      )
     );
   }
 
   Widget registrationPageUI() {
-    return Container(
+    return Builder(builder: (BuildContext _context){
+      _auth = Provider.of<AuthProvider>(_context);
+      return Container(
       height: _deviceHeight * 0.75,
       padding: EdgeInsets.symmetric(horizontal: _deviceWidth * 0.10),
       child: Column(
@@ -51,6 +57,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         ],
       ),
     );
+    } );
   }
 
   Widget _headingWidget() {
