@@ -1,3 +1,4 @@
+import 'package:chatify/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import './pages/login_page.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
       routes: {
         "login": (_context) => LoginPage(),
         "register": (_context) => RegistrationPage(),
+        "home": (_context) => HomePage(),
       },
       // home: RegistrationPage(),
     );

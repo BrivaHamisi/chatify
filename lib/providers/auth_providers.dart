@@ -47,11 +47,15 @@ class AuthProvider extends ChangeNotifier {
       status = AuthStatus.Authenticated;
       SnackbarService.instance.showSnackSuccess("Welcome, $user?.displayName ?? 'Guest'");
       //update last seen time
+      NavigationService.instance.navigateToReplacement("home");
+      //Navigate to homepage
+
 
       print("Logged In Successfully");
       
     } catch (e) {
       status = AuthStatus.Error;
+      user = null;
       SnackbarService.instance.showSnackError("Error Authenticating");
       print("Login Error: $e"); // Rethrow to handle the error in the UI
     } finally {
@@ -74,8 +78,9 @@ class AuthProvider extends ChangeNotifier {
       SnackbarService.instance.showSnackSuccess("Welcome, $user?.email ?? 'Guest'");
       //update last seen time
 
-      NavigationService.instance.goBack();
+      // NavigationService.instance.goBack();
       //Navigate to homepage
+      NavigationService.instance.navigateToReplacement("home");
 
       print("Registered Successfully");
       
